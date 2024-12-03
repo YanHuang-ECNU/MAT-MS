@@ -43,7 +43,7 @@ class InpaintDataset(td.Dataset):
 
 def train(model_str,
           max_epoch: int = 30, learning_rate=5e-4, adamw_beta=(0.9, 0.95),
-          log_interval: int = 200, ckpt_interval: int = 500, grad_norm: float = 2.0, **kwargs):
+          log_interval: int = 200, ckpt_interval: int = 5000, grad_norm: float = 2.0, **kwargs):
     data_loader = td.DataLoader(InpaintDataset(tag='Train'),
                                 batch_size=1, shuffle=True, num_workers=0)
     model = model_dict[model_str](**kwargs).cuda()
@@ -87,8 +87,6 @@ def train(model_str,
                     'model_state_dict': model.state_dict()
                 }
                 torch.save(ckpt_file, ckpt_save_dir / f'ckpt_epoch_{epoch:02d}_batch_{idx:06d}.pt')
-                break
-        break
 
 
 class Evaluator:
@@ -140,7 +138,6 @@ def test(model_str, dataset_tag, ckpt_epoch, ckpt_batch, **kwargs):
         evaluator.add(gt=label * 100, pred=output * 100, eval_mask=label_mask.gt(0))
         if idx % 512 == 0:
             print(evaluator.get())
-        break
     print('total:', evaluator.get())
 
 
@@ -156,7 +153,7 @@ def main():
 
 
 if __name__ == '__main__':
-    root_data_dir = Path('E:/HRY/Data')
+    root_data_dir = Path('Your_Dir_of_Data')
     packed_train_data_dir = root_data_dir / 'Train'
     sampled_mask_dir = root_data_dir / 'Mask'
     environment_z_dir = root_data_dir / 'idx_for_building'
