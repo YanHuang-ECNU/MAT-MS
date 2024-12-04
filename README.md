@@ -10,11 +10,11 @@
 spatiotemporal interpolated NDSI, elevation and temperature<br>
 3. Test and Strict_Test dataset, which is same as Train dataset
 ## Training
-Run the $train$ function.
+Run the $train$ function in run.py.
 You can specify various parameters of the model, 
 which are defined in lines 16-23 of model.py.
 ## Testing
-Run the $test$ function.
+Run the $test$ function in run.py.
 You can specify which epoch and batch of model to use as test parameters.
 ## Acknowledgments
 The code for the model draws inspiration from 
